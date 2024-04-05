@@ -1,8 +1,9 @@
 package study;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,5 +45,34 @@ public class StringTest {
 
     }
 
+    @Test
+    @DisplayName("기이한 계산기")
+    void calculate() {
+        Scanner sc = new Scanner(System.in);
+        String[] split = sc.nextLine().split(" ");
+
+        int result = Integer.parseInt(split[0]);
+
+        for (int i = 1; i < split.length; i += 2) {
+            String operator = split[i];
+            int operand = Integer.parseInt(split[i + 1]);
+
+            if (operator.equals("+")) {
+                result += operand;
+            } else if (operator.equals("-")) {
+                result -= operand;
+            } else if (operator.equals("*")) {
+                result *= operand;
+            } else if (operator.equals("/")) {
+                if (operand != 0) {
+                    result /= operand;
+                } else {
+                    throw new ArithmeticException("can't divide with 0");
+                }
+            } else {
+                throw new IllegalArgumentException("not supported");
+            }
+        }
+    }
 
 }
